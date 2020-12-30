@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "influencers-app"
+  "defaultProject": "influencers-app",
+  "cli": {
+    "analytics": "fe020f41-eb51-4285-bb7b-7b5560bf4a73"
+  }
 }
