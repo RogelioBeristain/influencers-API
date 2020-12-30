@@ -2,51 +2,76 @@
 
 
 
-    <form (ngSubmit) ="guardar( f )" #f="ngForm" class="my-4">
+    <form (ngSubmit)="guardar( f )" #f="ngForm" class="my-4">
 
 
         <div class="form-group">
             <label for="categoryInput">Categoria</label>
-            <input type="text" placeholder="" name="category_id" [(ngModel)]="influencer.categoryId" class="form-control" id="category_id"
-               >
+          
+            <select aria-label="category" name="category_id" [(ngModel)]="influencer.categoryId" id="category_id" title="category"
+                class="custom-select custom-select-sm ">
+                <option value="0" disabled="disabled" hidden="hidden">Categoria</option>
+
+
+                <option *ngFor="let catagoria of categoriesData" [value]="catagoria.id" >{{catagoria.name}}</option>
+
+                
+           
+            </select>
+         
         </div>
         <div class="form-group">
             <label for="socialNetworkInput">Red Social</label>
-            <input type="text" placeholder="Facebook" [(ngModel)]="influencer.socialNetworkId" name="social_network_id" class="form-control" id="social_network_id">
+            <select aria-label="socialNetwork" name="socialNetwork_id" [(ngModel)]="influencer.socialNetworkId" id="socialNetwork" title="socialNetwork"
+                class="custom-select custom-select-sm ">
+                <option value="0" disabled="disabled" hidden="hidden">Red social</option>
+
+
+                <option *ngFor="let socialNetwork of socialNetworksData"  [value]="socialNetwork.id">{{socialNetwork.name}}</option>
+
+                
+           
+            </select>
         </div>
         <div class="form-group">
             <label for="userNameInput">Nombre de usuario</label>
-            <input type="text"  placeholder="@username" [(ngModel)]="influencer.userName" name="username" class="form-control" id="username"
-                aria-describedby="emailHelp">
+            <input type="text" required placeholder="@username" [(ngModel)]="influencer.userName" name="username"
+                class="form-control" id="username" aria-describedby="emailHelp">
         </div>
         <div class="form-group">
             <label for="fullNameInput">Nombre completo</label>
-            <input type="text" placeholder="John Smith Perez" [(ngModel)]="influencer.fullName" name="full_name" class="form-control" id="full_name">
+            <input type="text" required placeholder="John Smith Perez" [(ngModel)]="influencer.fullName"
+                name="full_name" class="form-control" id="full_name">
         </div>
         <div class="form-group">
             <label for="phoneNumberInput">Telefono</label>
-            <input type="tel"  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="000-000-0000"  [(ngModel)]="influencer.phone" name="phone" class="form-control" id="phone">
+            <input type="tel" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="000-000-0000"
+                [(ngModel)]="influencer.phone" name="phone" class="form-control" id="phone">
         </div>
         <div class="form-group">
             <label for="emailInput">Email</label>
-            <input type="email" placeholder="user@example.com" [(ngModel)]="influencer.email" name="email" class="form-control" id="email">
+            <input type="email" required placeholder="user@example.com" [(ngModel)]="influencer.email" name="email"
+                class="form-control" id="email">
         </div>
         <div class="form-group">
             <label for="flollonwersInput">Followers</label>
-            <input type="number" min="1" placeholder="" [(ngModel)]="influencer.followersCount" name="followers_count" class="form-control" id="followers_count">
+            <input type="number" required min="1" placeholder="" [(ngModel)]="influencer.followersCount"
+                name="followers_count" class="form-control" id="followers_count">
         </div>
         <div class="form-group">
             <label for="flollonwingInput">Following</label>
-            <input type="number" min="1" placeholder="" [(ngModel)]="influencer.followingCount" name="following_count" class="form-control" id="following_count">
+            <input type="number" required min="1" placeholder="" [(ngModel)]="influencer.followingCount"
+                name="following_count" class="form-control" id="following_count">
         </div>
 
 
-        <button type="submit" class="btn btn-primary">Guardar</button>  <button *ngIf="influencer.id" (click)="borrar(influencer.id,influencer)" type="button" class="btn btn-danger ml-2">Eliminar</button>
-        
+        <button type="submit" class="btn btn-primary">Guardar</button> <button *ngIf="influencer.id"
+            (click)="borrar(influencer.id,influencer)" type="button" class="btn btn-danger ml-2">Eliminar</button>
+
     </form>
 
 
-    
+
 
 
 

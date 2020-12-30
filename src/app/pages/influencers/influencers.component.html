@@ -1,8 +1,34 @@
 <div class="container-full mx-auto col-md-6">
 
+    <div *ngIf="cargando" class="alert alert-info text-center mt-3">
+        <h4 class="alert-heading">
+            Cargando
+        </h4>
+        <p>
+            <i class="fa fa-sync-alt fa-spin ga-2x">
+
+            </i>
+        </p>
+        <p class=" mb-0">
+            espere por favor
+        </p>
+
+    </div>
+
+    <div *ngIf="!cargando && influencers.length <=0" class="alert alert-warning text-center mt-3">
+        <h4 class="alert-heading">
+            Sin influencers
+        </h4>
+        <p>
+            <i class="fa fa-exclamation  ga-2x">
+
+            </i>
+        </p>
 
 
-    <div *ngFor="let influencer of influencers"  class=" card-influ  mt-2  ">
+    </div>
+
+    <div  *ngFor="let influencer of influencers"  class=" card-influ  mt-2  ">
 
         <div class="row ">
 
@@ -104,33 +130,7 @@
     <a routerLink="/influencer/new" class="float">
         <i class="fa fa-plus my-float"></i>
     </a>
-    <div class="alert alert-info text-center mt-3">
-        <h4 class="alert-heading">
-            Cargando
-        </h4>
-        <p>
-            <i class="fa fa-sync-alt fa-spin ga-2x">
-
-            </i>
-        </p>
-        <p class=" mb-0">
-            espere por favor
-        </p>
-
-    </div>
-
-    <div class="alert alert-warning text-center mt-3">
-        <h4 class="alert-heading">
-            Sin influencers
-        </h4>
-        <p>
-            <i class="fa fa-exclamation  ga-2x">
-
-            </i>
-        </p>
-
-
-    </div>
+ 
 
 
 

@@ -14,36 +14,26 @@ import { InfluencerModel } from '../../models/influencer.model';
 export class InfluencersComponent implements OnInit {
    
     influencers: Array<object>=[];
-    
+    cargando =false;
+
 
   constructor(private influencersService: InfluencersService ,private modalService: NgbModal) {}
 
   ngOnInit(){
+    this.cargando=true;
 
     this.influencersService.getInfluencers()
       .subscribe(resp=> {
         console.log(resp["data"]);
         this.influencers=resp["data"];
       /*   this.influencers=resp; */
+
+      this.cargando=false;
       });
 
 
   }
 
-  ver(influencer:object) {
-   
-     alert("ver"); 
-  }
 
-  editar(influencer:object) {
-    alert("edia"); 
-    
-    
-  }
-
-  eliminar(influencer:object) {
-    alert("eliminar"); 
-    
-  }
 
 }

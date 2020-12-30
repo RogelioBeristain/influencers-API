@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm ,Validators} from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ActivatedRoute,Router } from '@angular/router';
 
 
 import { InfluencerModel } from '../../models/influencer.model';
 import { InfluencersService } from '../../services/influencers.service';
+
+import { CategoriesService } from '../../services/categories.service';
+
+import { SocialnetworksService } from '../../services/socialnetworks.service';
 
 
 import Swal from 'sweetalert2'
@@ -20,9 +24,11 @@ import Swal from 'sweetalert2'
 export class InfluencerComponent implements OnInit {
 
   influencer = new InfluencerModel();
-
-
-  constructor(private influencersService: InfluencersService, private route: ActivatedRoute, private router: Router) { 
+  
+  categoriesData : any; 
+  socialNetworksData : any; 
+  
+  constructor(private influencersService: InfluencersService,private categoriesService: CategoriesService,private socialnetworksService: SocialnetworksService, private route: ActivatedRoute, private router: Router) { 
 
 
 
@@ -31,6 +37,25 @@ export class InfluencerComponent implements OnInit {
   ngOnInit(): void {
 
     const id:string= this.route.snapshot.paramMap.get('id');
+    
+   
+    
+    this.categoriesService.getCategories().subscribe(
+              categories =>{
+                    console.log(categories);
+                    this.categoriesData=categories.data;
+              }
+    ); 
+
+
+  
+    
+    this.socialnetworksService.getNets().subscribe(
+              nets =>{
+                    console.log(nets);
+                    this.socialNetworksData=nets.data;
+              }
+    ); 
 
     if ( id !=='new'){
         this.influencersService.getInfluencer(parseInt(id) ).subscribe(resp =>{
@@ -54,48 +79,60 @@ export class InfluencerComponent implements OnInit {
 
 
     if (form.invalid) {
-      alert('Formulario invalido');
+    
+      Swal.fire({
+        title: 'Espere',
+        text: 'Ocurrio un error',
+        type: 'error',
+        allowOutsideClick: true
+      }
+      );
+  
+   
+    }else{
+
+
+      Swal.fire({
+        title: 'Espere',
+        text: 'Guardando información',
+        type: 'info',
+        allowOutsideClick: false
+      }
+      );
+  
+      Swal.showLoading();
+  
+  
+      let peticion: Observable<any>;
+  
+  
+  
+      if (this.influencer.id) {
+        console.log("edit");
+        peticion = this.influencersService.updateInfluencer(this.influencer);
+      }
+      else {
+        console.log("create");
+        peticion = this.influencersService.createInfluencer(this.influencer);
+      }
+  
+      peticion.subscribe(
+        resp => {
+          console.log(resp);
+          Swal.fire({
+            title:this.influencer.userName,
+            text:'Acción realizada correctamente',
+            type:'success'
+            
+          });
+          this.router.navigate(['/'])
+          
+        }
+      )
 
     }
     
    
-    Swal.fire({
-      title: 'Espere',
-      text: 'Guardando información',
-      type: 'info',
-      allowOutsideClick: false
-    }
-    );
-
-    Swal.showLoading();
-
-
-    let peticion: Observable<any>;
-
-
-
-    if (this.influencer.id) {
-      console.log("edit");
-      peticion = this.influencersService.updateInfluencer(this.influencer);
-    }
-    else {
-      console.log("create");
-      peticion = this.influencersService.createInfluencer(this.influencer);
-    }
-
-    peticion.subscribe(
-      resp => {
-        console.log(resp);
-        Swal.fire({
-          title:this.influencer.userName,
-          text:'Acción realizada correctamente',
-          type:'success'
-          
-        });
-        this.router.navigate(['/'])
-        
-      }
-    )
 
 
 
