@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { InfluencerModel } from '../models/influencer.model';
+
 import {map} from 'rxjs/operators';
+import { InfluencerResponse, InfluencerModel} from '../models';
+import { ErrorResponse } from 'src/app/models/error.response';
+import { ErrorModel } from '../models/error.model';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -52,15 +56,27 @@ export class InfluencersService {
   }
 
   getInfluencers(){
+    return this.http.get<InfluencerResponse>(`${this.url}/influencers`).pipe( 
+      map(resp=> {
         
-    const data:any=this.http.get(`${this.url}/influencers`);
-          
+        return resp.data.map(  influencer=> {
+            
+            return  InfluencerModel.influencerJson(influencer);
+
+        });
+      
+      })
+    );
+  }
+
+  getErrors(errores: ErrorResponse ):string{
 
 
+    return ErrorModel.errorJson(errores.errors).printErrors(errores);
 
-    return data;
     
-
+  
+        
   }
 
   getInfluencer( id:number ){

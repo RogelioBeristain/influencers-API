@@ -44,7 +44,7 @@
                                     <svg width="50" height="50">
                                         <circle cx="25" cy="25" r="20" fill="#aeaeae" />
                                         <text x="50%" y="50%" text-anchor="middle" fill="white" font-size="20px"
-                                            font-family="Arial" dy=".3em">*</text>
+                                            font-family="Arial" dy=".3em">{{influencer.socialNetworkId}}</text>
                                         Sorry, your browser does not support inline SVG.
                                     </svg>
 
@@ -56,8 +56,8 @@
                                 <div class="data-influ">
 
                                     <div>
-                                        <h5>{{ influencer["full_name"] }}</h5>
-                                        <span>@{{ influencer["username"] }}</span>
+                                        <h5>{{ influencer.fullName }}</h5>
+                                        <span>@{{ influencer.userName }}</span>
                                     </div>
 
 
@@ -68,12 +68,12 @@
                                             icon
 
                                             <div>
-                                                {{ influencer["category_id"] }}
+                                                {{ influencer.categoryId }}
                                             </div>
 
                                         </a>
                                         <a class="info-icon" target="_blank" rel="noopener noreferrer">
-                                            {{ influencer["followers"] }}
+                                            {{ influencer.followersCount }}
                                             <div>
                                                 Seguidores
                                             </div>
@@ -84,7 +84,7 @@
                                             </div>
                                         </a>
                                         <a class="info-icon" target="_blank" rel="noopener noreferrer">
-                                            {{ influencer["followins"] }}
+                                            {{ influencer.followingCount }}
                                             <div>
                                                 Seguidos
                                             </div>
@@ -92,11 +92,11 @@
 
                                         </a>
                                         <a class="info-icon" target="_blank" rel="noopener noreferrer">
-                                            {{ influencer["phone"] }}
+                                            {{ influencer.phone }}
                                         </a>
 
                                         <a class="info-icon" target="_blank" rel="noopener noreferrer">
-                                            {{ influencer["email"] }}
+                                            {{ influencer.email }}
                                         </a>
 
 

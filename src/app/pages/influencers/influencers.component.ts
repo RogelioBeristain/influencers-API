@@ -3,7 +3,7 @@ import { Component, OnInit,Input } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { InfluencersService } from '../../services/influencers.service';
 import { InfluencerModel } from '../../models/influencer.model';
-
+import { InfluencerResponse } from '../../models/influcencer.response';
 
 
 @Component({
@@ -13,7 +13,7 @@ import { InfluencerModel } from '../../models/influencer.model';
 })
 export class InfluencersComponent implements OnInit {
    
-    influencers: Array<object>=[];
+    influencers: InfluencerModel[]=[];
     cargando =false;
 
 
@@ -22,10 +22,9 @@ export class InfluencersComponent implements OnInit {
   ngOnInit(){
     this.cargando=true;
 
-    this.influencersService.getInfluencers()
-      .subscribe(resp=> {
-        console.log(resp["data"]);
-        this.influencers=resp["data"];
+    this.influencersService.getInfluencers().subscribe( resp  => {
+     
+        this.influencers=resp;
       /*   this.influencers=resp; */
 
       this.cargando=false;

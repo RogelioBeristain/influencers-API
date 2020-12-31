@@ -1,18 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm ,Validators} from '@angular/forms';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { ActivatedRoute,Router } from '@angular/router';
-
-
 import { InfluencerModel } from '../../models/influencer.model';
 import { InfluencersService } from '../../services/influencers.service';
-
 import { CategoriesService } from '../../services/categories.service';
-
 import { SocialnetworksService } from '../../services/socialnetworks.service';
-
-
 import Swal from 'sweetalert2'
+import { ErrorResponse } from 'src/app/models/error.response';
+import { ErrorModel } from '../../models/error.model';
 
 @Component({
   selector: 'app-influencer',
@@ -28,28 +24,23 @@ export class InfluencerComponent implements OnInit {
   categoriesData : any; 
   socialNetworksData : any; 
   
-  constructor(private influencersService: InfluencersService,private categoriesService: CategoriesService,private socialnetworksService: SocialnetworksService, private route: ActivatedRoute, private router: Router) { 
-
-
-
-  }
+  constructor(private influencersService: InfluencersService,private categoriesService: CategoriesService,private socialnetworksService: SocialnetworksService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
 
     const id:string= this.route.snapshot.paramMap.get('id');
-    
+    this.influencer.categoryId=-1;
+    this.influencer.socialNetworkId=-1;
    
     
     this.categoriesService.getCategories().subscribe(
               categories =>{
                     console.log(categories);
                     this.categoriesData=categories.data;
+                  
               }
     ); 
 
-
-  
-    
     this.socialnetworksService.getNets().subscribe(
               nets =>{
                     console.log(nets);
@@ -77,7 +68,7 @@ export class InfluencerComponent implements OnInit {
 
   guardar(form: NgForm) {
 
-
+    console.log(form);
     if (form.invalid) {
     
       Swal.fire({
@@ -87,6 +78,11 @@ export class InfluencerComponent implements OnInit {
         allowOutsideClick: true
       }
       );
+    
+      Object.values( form.controls).forEach(control => {
+          control.markAsTouched();
+      } )
+
   
    
     }else{
@@ -115,10 +111,11 @@ export class InfluencerComponent implements OnInit {
         console.log("create");
         peticion = this.influencersService.createInfluencer(this.influencer);
       }
+      
   
       peticion.subscribe(
         resp => {
-          console.log(resp);
+         
           Swal.fire({
             title:this.influencer.userName,
             text:'Acción realizada correctamente',
@@ -127,7 +124,26 @@ export class InfluencerComponent implements OnInit {
           });
           this.router.navigate(['/'])
           
-        }
+        },
+
+        err => { 
+
+          
+          let errores :ErrorResponse =  err.error;
+          
+        
+         let cadenaErrores:string = this.influencersService.getErrors(errores);
+
+          
+
+        
+        Swal.fire({
+          title:this.influencer.userName,
+          text:cadenaErrores,
+          type:'error'
+          
+        });
+      } 
       )
 
     }
