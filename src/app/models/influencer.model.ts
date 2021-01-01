@@ -1,6 +1,6 @@
 export class InfluencerModel{
     
-    static influencerJson( obj: Object ){
+    static jsonToInfluencer( obj: Object ){
             
 
         return new InfluencerModel(
@@ -15,6 +15,27 @@ export class InfluencerModel{
             obj["following_count"]
 
         );
+
+    };
+
+
+
+
+    static influencerToJson( influencer: InfluencerModel ){
+            
+       return {
+           
+            "social_network_id": influencer.socialNetworkId,
+            "category_id": influencer.categoryId,
+            "username":influencer.userName,
+            "full_name": influencer.fullName,
+            "phone": influencer.phone,
+            "email": influencer.email,
+            "followers_count": influencer.followersCount,
+            "following_count": influencer.followingCount,
+          
+          }
+    
 
     };
     
