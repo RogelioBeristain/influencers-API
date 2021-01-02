@@ -123,36 +123,100 @@ export class InfluencerComponent implements OnInit {
 
 
 
-      if (this.influencer.id) {
-        console.log("edit");
-        peticion = this.influencersService.updateInfluencer(this.influencer);
+      if (!this.influencer.id) {
+        //console.log("edit");
+        peticion = this.influencersService.createInfluencer(this.influencer);
+
+        peticion.subscribe(
+          resp => {
+  
+            Swal.fire({  text: 'Acción realizada correctamente', type: 'success' });
+  
+            Swal.fire({
+              title: "¿Deseas crear un nuevo influencer?",
+              text: `Da click en Cancelar para ir a la lista de influencers`,
+              type: 'question',
+              showConfirmButton: true,
+              showCancelButton: true
+            }).then(resp => {
+              if (resp.value) {
+  
+                this.cleanData(form);
+        
+             
+              }else{
+  
+                this.router.navigate(['/']);
+              }
+  
+  
+  
+          
+  
+          })},
+  
+          err => {
+  
+            let errores: ErrorResponse = err.error;
+            let cadenaErrores: string = this.influencersService.getErrors(errores);
+            Swal.fire({
+              title: this.influencer.userName,
+              text: cadenaErrores,
+              type: 'error'
+  
+            });
+          }
+        )
+
       }
       else {
-        console.log("create");
-        peticion = this.influencersService.createInfluencer(this.influencer);
+        //console.log("create");
+        peticion = this.influencersService.updateInfluencer(this.influencer);
+
+        peticion.subscribe(
+          resp => {
+  
+            Swal.fire({  text: 'Acción realizada correctamente', type: 'success' });
+  
+            Swal.fire({
+              title: "¿Deseas seguir editando al influencer?",
+              text: `Da click en Cancelar para ir a la lista de influencers`,
+              type: 'question',
+              showConfirmButton: true,
+              showCancelButton: true
+            }).then(resp => {
+              if (resp.value) {
+  
+              /*   this.cleanData(form); */
+        
+             
+              }else{
+  
+                this.router.navigate(['/']);
+              }
+  
+  
+  
+          
+  
+          })},
+  
+          err => {
+  
+            let errores: ErrorResponse = err.error;
+            let cadenaErrores: string = this.influencersService.getErrors(errores);
+            Swal.fire({
+              title: this.influencer.userName,
+              text: cadenaErrores,
+              type: 'error'
+  
+            });
+          }
+        )
       }
 
 
-      peticion.subscribe(
-        resp => {
-
-          Swal.fire({ title: this.influencer.userName, text: 'Acción realizada correctamente', type: 'success' });
-          this.router.navigate(['/'])
-
-        },
-
-        err => {
-
-          let errores: ErrorResponse = err.error;
-          let cadenaErrores: string = this.influencersService.getErrors(errores);
-          Swal.fire({
-            title: this.influencer.userName,
-            text: cadenaErrores,
-            type: 'error'
-
-          });
-        }
-      )
+   
 
     }
 
@@ -160,6 +224,14 @@ export class InfluencerComponent implements OnInit {
 
 
 
+  }
+  
+  cleanData(form:NgForm){
+
+    this.influencer=new InfluencerModel();
+    Object.values(form.controls).forEach(control => {
+     control.markAsUntouched();
+   })
   }
 
   borrar(id: number, influencer?: InfluencerModel) {
