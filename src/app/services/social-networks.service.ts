@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class SocialnetworksService {
+export class SocialNetworksService {
 
   private url='http://127.0.0.1:8000/api';
 
@@ -15,7 +15,7 @@ export class SocialnetworksService {
   }
 
 
-  getNets(){
+  getSocialNetworks(){
         
     const data:any=this.http.get(`${this.url}/social-networks`);
       

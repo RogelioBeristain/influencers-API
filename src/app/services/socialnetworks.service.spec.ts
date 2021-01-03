@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SocialnetworksService } from './socialnetworks.service';
+import { SocialNetworksService } from './social-networks.service';
 
 describe('SocialnetworksService', () => {
-  let service: SocialnetworksService;
+  let service: SocialNetworksService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SocialnetworksService);
+    service = TestBed.inject(SocialNetworksService);
   });
 
   it('should be created', () => {

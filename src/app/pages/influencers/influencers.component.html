@@ -41,19 +41,20 @@
                         <div class="media d-flex">
                             <div class="align-self-center">
                                 <div class="img-influ float-left pr-2">
-                                    <svg width="50" height="50">
+                                   <!--  <svg width="50" height="50">
                                         <circle cx="25" cy="25" r="20" fill="#aeaeae" />
                                         <text x="50%" y="50%" text-anchor="middle" fill="white" font-size="20px"
-                                            font-family="Arial" dy=".3em">{{influencer.socialNetworkId}}</text>
+                                            font-family="Arial" dy=".3em">{{influencer.socialNetworkId}}   </text>
                                         Sorry, your browser does not support inline SVG.
-                                    </svg>
+                                    </svg> -->
+                                    <i class={{influencer.getSocialIcon()}}>  </i>
 
 
 
                                 </div>
                             </div>
                             <div class="media-body ">
-                                <div class="data-influ">
+                                <div class="data-influ ">
 
                                     <div>
                                         <h5>{{ influencer.fullName }}</h5>
@@ -61,14 +62,14 @@
                                     </div>
 
 
-                                    <div class="info">
+                                    <div class="info pt-2">
 
                                         <a class="info-icon" target="_blank" rel="noopener noreferrer">
 
-                                            icon
+                                            <i class={{influencer.getCategoriesIcon()}}>  </i>
 
                                             <div>
-                                                {{ influencer.categoryId }}
+                                                {{ influencer.getCategoryName() }}
                                             </div>
 
                                         </a>
@@ -91,12 +92,12 @@
 
 
                                         </a>
-                                        <a class="info-icon" target="_blank" rel="noopener noreferrer">
-                                            {{ influencer.phone }}
+                                        <a class="info-icon" (click)="showPhone(influencer)" rel="noopener noreferrer">
+                                            <i class="fas fa-phone fa-lg">  </i>
                                         </a>
 
-                                        <a class="info-icon" target="_blank" rel="noopener noreferrer">
-                                            {{ influencer.email }}
+                                        <a class="info-icon" (click)="showEmail(influencer)"   rel="noopener noreferrer">
+                                            <i class="fas fa-envelope fa-lg">  </i>
                                         </a>
 
 

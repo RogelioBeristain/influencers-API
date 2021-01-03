@@ -5,10 +5,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { InfluencerModel } from '../../models/influencer.model';
 import { InfluencersService } from '../../services/influencers.service';
 import { CategoriesService } from '../../services/categories.service';
-import { SocialnetworksService } from '../../services/socialnetworks.service';
+import { SocialNetworksService } from '../../services/social-networks.service';
 import Swal from 'sweetalert2'
 import { ErrorResponse } from 'src/app/models/error.response';
-import { ErrorModel } from '../../models/error.model';
+
+import {  Category } from '../../models/categories.response';
 
 @Component({
   selector: 'app-influencer',
@@ -21,10 +22,10 @@ export class InfluencerComponent implements OnInit {
 
   influencer = new InfluencerModel();
 
-  categoriesData: any;
+  categoriesData:Category[];
   socialNetworksData: any;
 
-  constructor(private influencersService: InfluencersService, private categoriesService: CategoriesService, private socialnetworksService: SocialnetworksService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private influencersService: InfluencersService, private categoriesService: CategoriesService, private socialNetworksService: SocialNetworksService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -36,8 +37,8 @@ export class InfluencerComponent implements OnInit {
     this.categoriesService.getCategories().subscribe(
       categories => {
         console.log(categories);
-        this.categoriesData = categories.data;
-
+        this.categoriesData = categories;
+      
       },
       err => {
 
@@ -52,7 +53,7 @@ export class InfluencerComponent implements OnInit {
       }
     );
 
-    this.socialnetworksService.getNets().subscribe(
+    this.socialNetworksService.getSocialNetworks().subscribe(
       nets => {
       
         this.socialNetworksData = nets.data;
@@ -133,11 +134,18 @@ export class InfluencerComponent implements OnInit {
             Swal.fire({  text: 'Acción realizada correctamente', type: 'success' });
   
             Swal.fire({
-              title: "¿Deseas crear un nuevo influencer?",
-              text: `Da click en Cancelar para ir a la lista de influencers`,
+              title: "¿Deseas crear un nuevo enfluencer?",
+              text: ``,
               type: 'question',
               showConfirmButton: true,
-              showCancelButton: true
+              showCancelButton: true,
+              confirmButtonText:
+    '<i class="fa fa-thumbs-up"></i> Si!',
+  confirmButtonAriaLabel: 'Thumbs up, great!',
+              cancelButtonText:
+              'No, ir a la lista de influencers <i class="far fa-times-circle"></i>',
+            cancelButtonAriaLabel: 'Thumbs up, great!'
+            
             }).then(resp => {
               if (resp.value) {
   
@@ -180,10 +188,16 @@ export class InfluencerComponent implements OnInit {
   
             Swal.fire({
               title: "¿Deseas seguir editando al influencer?",
-              text: `Da click en Cancelar para ir a la lista de influencers`,
+              text: ``,
               type: 'question',
               showConfirmButton: true,
-              showCancelButton: true
+              showCancelButton: true,
+              confirmButtonText:
+              '<i class="fa fa-thumbs-up"></i> Si!',
+            confirmButtonAriaLabel: 'Thumbs up, great!',
+                        cancelButtonText:
+                        'No, ir a la lista de influencers <i class="far fa-times-circle"></i>',
+                      cancelButtonAriaLabel: 'Thumbs up, great!'
             }).then(resp => {
               if (resp.value) {
   

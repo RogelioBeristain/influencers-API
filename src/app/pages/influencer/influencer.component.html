@@ -3,68 +3,84 @@
 
 
     <form (ngSubmit)="guardar( f )" #f="ngForm" class="my-4">
+        <div class="row">
 
+            <div class="form-group col-md-6">
+                <label for="categoryInput">Categoria</label>
+              
+                <select aria-label="category"   required [class.is-invalid]="category.invalid && category.touched || category.touched  &&category.value<0" #category="ngModel" name="category_id" [(ngModel)]="influencer.categoryId" id="category_id" title="category"
+                    class="custom-select custom-select ">
+                    <option value="-1" disabled="disabled" hidden="hidden">Categoria</option>
+    
+    
+                    <option *ngFor="let catagoria of categoriesData" [value]="catagoria.id" >{{catagoria.name}}</option>
+    
+                    
+               
+                </select>
+             
+            </div>
+            <div class="form-group  col-md-6">
+                <label for="socialNetworkInput">Red Social</label>
+                <select aria-label="socialNetwork" required [class.is-invalid]="socialN.invalid && socialN.touched || socialN.touched &&socialN.value<0" #socialN="ngModel" name="socialNetwork_id" [(ngModel)]="influencer.socialNetworkId" id="socialNetwork" title="socialNetwork"
+                    class="custom-select custom-select">
+                    <option value="-1" selected disabled="disabled" hidden="hidden">Red social</option>
+    
+    
+                    <option *ngFor="let socialNetwork of socialNetworksData"  [value]="socialNetwork.id">{{socialNetwork.name}}</option>
+    
+                    
+               
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label for="categoryInput">Categoria</label>
-          
-            <select aria-label="category"   required [class.is-invalid]="category.invalid && category.touched || category.touched  &&category.value<0" #category="ngModel" name="category_id" [(ngModel)]="influencer.categoryId" id="category_id" title="category"
-                class="custom-select custom-select-sm ">
-                <option value="-1" disabled="disabled" hidden="hidden">Categoria</option>
-
-
-                <option *ngFor="let catagoria of categoriesData" [value]="catagoria.id" >{{catagoria.name}}</option>
-
-                
-           
-            </select>
-         
         </div>
-        <div class="form-group">
-            <label for="socialNetworkInput">Red Social</label>
-            <select aria-label="socialNetwork" required [class.is-invalid]="socialN.invalid && socialN.touched || socialN.touched &&socialN.value<0" #socialN="ngModel" name="socialNetwork_id" [(ngModel)]="influencer.socialNetworkId" id="socialNetwork" title="socialNetwork"
-                class="custom-select custom-select-sm ">
-                <option value="-1" selected disabled="disabled" hidden="hidden">Red social</option>
 
-
-                <option *ngFor="let socialNetwork of socialNetworksData"  [value]="socialNetwork.id">{{socialNetwork.name}}</option>
-
-                
-           
-            </select>
+      <div class="row">
+        
+        <div class="form-group col-md-6">
+            <label for="fullNameInput">Nombre completo</label>
+            <input type="text" required maxlength="255" [class.is-invalid]="fullname.invalid && fullname.touched" #fullname="ngModel" placeholder="John Smith Perez" [(ngModel)]="influencer.fullName"
+                name="fullname" class="form-control" id="full_name">
         </div>
-        <div class="form-group">
+
+        <div class="form-group col-md-6">
             <label for="userNameInput">Nombre de usuario</label>
             <input type="text" required maxlength="50" [class.is-invalid]="username.invalid && username.touched" #username="ngModel" placeholder="@username" [(ngModel)]="influencer.userName" name="username"
                 class="form-control" id="username" aria-describedby="emailHelp">
             <small *ngIf="username.invalid && username.touched" class="form-text text-danger"> Este campo es requerido</small>
             <small *ngIf="username.value  && username.value.length>50" class="form-text text-danger"> El nombre de usuario no puede tener más de 50 caracteres</small>
         </div>
-        <div class="form-group">
-            <label for="fullNameInput">Nombre completo</label>
-            <input type="text" required maxlength="255" [class.is-invalid]="fullname.invalid && fullname.touched" #fullname="ngModel" placeholder="John Smith Perez" [(ngModel)]="influencer.fullName"
-                name="fullname" class="form-control" id="full_name">
-        </div>
-        <div class="form-group">
-            <label for="phoneNumberInput">Telefono</label>
-            <input type="tel" required minlength="10" maxlength="10"  [class.is-invalid]="phone.invalid && phone.touched" #phone="ngModel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder=""
-                [(ngModel)]="influencer.phone" name="phone" class="form-control" id="phone">
-        </div>
-        <div class="form-group">
-            <label for="emailInput">Email</label>
-            <input type="email" required maxlength="100"  [class.is-invalid]="email.invalid && email.touched" #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="user@example.com" [(ngModel)]="influencer.email" name="email"
-                class="form-control" id="email">
-        </div>
-        <div class="form-group">
+      </div>
+
+<div class="row">
+
+    <div class="form-group col-md-6">
+        <label for="phoneNumberInput">Telefono</label>
+        <input type="tel" required minlength="10" maxlength="10"  [class.is-invalid]="phone.invalid && phone.touched" #phone="ngModel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder=""
+            [(ngModel)]="influencer.phone" name="phone" class="form-control" id="phone">
+    </div>
+    <div class="form-group col-md-6">
+        <label for="emailInput">Email</label>
+        <input type="email" required maxlength="100"  [class.is-invalid]="email.invalid && email.touched" #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="user@example.com" [(ngModel)]="influencer.email" name="email"
+            class="form-control" id="email">
+    </div>
+</div>
+      
+      <div class="row">
+        <div class="form-group col-md-6">
             <label for="flollonwersInput">Followers</label>
-            <input type="number" required min="0" [class.is-invalid]="followers.invalid && followers.touched" #followers="ngModel" placeholder="" [(ngModel)]="influencer.followersCount"
+            <input type="number" required min="0"  step="1"[class.is-invalid]="followers.invalid && followers.touched" #followers="ngModel" placeholder="" [(ngModel)]="influencer.followersCount"
                 name="followers_count" class="form-control" id="followers_count">
         </div>
-        <div class="form-group">
+        <div class="form-group col-md-6">
             <label for="flollonwingInput">Following</label>
-            <input type="number" required min="0" [class.is-invalid]="follonwing.invalid && follonwing.touched" #follonwing="ngModel" placeholder="" [(ngModel)]="influencer.followingCount"
+            <input type="number" required min="0" step="1" [class.is-invalid]="follonwing.invalid && follonwing.touched" #follonwing="ngModel" placeholder="" [(ngModel)]="influencer.followingCount"
                 name="following_count" class="form-control" id="following_count">
         </div>
+
+      </div>
+     
 
 
         <button type="submit" class="btn btn-primary">Guardar</button> <button *ngIf="influencer.id"
